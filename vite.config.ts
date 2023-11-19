@@ -2,16 +2,14 @@ import { defineConfig } from "vite";
 import monkey, { MonkeyUserScript } from "vite-plugin-monkey";
 
 const userscript: MonkeyUserScript = {
-  name: "userscript-name",
+  name: "Anime Subreddit Discussion Link",
   namespace: "https://github.com/kiangkuang",
-  version: "0.0.1",
-  description: "userscript description",
+  version: "1.2.1",
+  description:
+    "Adds a link to Anime Subreddit episode discussion threads on anime platforms",
   author: "Kiang Kuang",
-  match: "https://github.com/*",
+  include: ["*://aniwave.tld/watch/*"],
   icon: "https://www.google.com/s2/favicons?sz=64&domain=github.com",
-  grant: [],
-  require: [],
-  // add any other userscript headers
 };
 
 // https://vitejs.dev/config/
