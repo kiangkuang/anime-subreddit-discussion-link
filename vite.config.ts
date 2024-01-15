@@ -6,7 +6,7 @@ const userscript: MonkeyUserScript = {
   namespace: "https://github.com/kiangkuang",
   version: "1.2.1",
   description:
-    "Adds a link to Anime Subreddit episode discussion threads on anime platforms",
+    "Adds a link to Anime Subreddit episode discussion threads on anime platforms.",
   author: "Kiang Kuang",
   include: ["*://aniwave.tld/watch/*"],
   icon: "https://www.google.com/s2/favicons?sz=64&domain=github.com",
