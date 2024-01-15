@@ -1,18 +1,27 @@
-export default () => {
-  const e = $(
-    '<a href="#" target="_blank" class="ctrl"><i class="fab fa-reddit"></i> Reddit</a>',
-  );
-  $("#controls .left").prepend(e);
+import { createElement, getLink } from "../utils";
 
-  e.hover(() => {
-    const title = $("#w-info .title")
-      .text()
+export default () => {
+  var e = createElement(
+    "a",
+    {
+      href: "#",
+      target: "_blank",
+      class: "ctrl",
+    },
+    [createElement("i", { class: "fab fa-reddit" }), " Reddit"],
+  );
+
+  document.querySelector("#controls .left")?.prepend(e);
+
+  e.addEventListener("mouseover", () => {
+    // const title = (document.querySelector("#w-info .names")?.textContent ?? "").split(";")[0]
+    const title = (document.querySelector("#w-info .title")?.textContent ?? "")
       .replace("(TV)", "")
       .replace(/-/g, " ");
-    const epi = $("#w-servers .tip > div:first-child > b").text();
-    const href = `https://www.reddit.com/r/anime/search/?q=${encodeURIComponent(
-      title,
-    )} episode ${epi} discussion&sort=hot`;
-    e.attr("href", href);
+    const epi = (
+      document.querySelector("#w-servers .tip > div:first-child > b")
+        ?.textContent ?? ""
+    ).replace("Episode ", "");
+    e.setAttribute("href", getLink(title, epi));
   });
 };

@@ -7,12 +7,14 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.27",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
     "vite-plugin-monkey": "^3.5.0"
+  },
+  "dependencies": {
+    "sentinel-js": "^0.0.7"
   }
 }

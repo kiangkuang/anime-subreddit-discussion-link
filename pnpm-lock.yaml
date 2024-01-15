@@ -4,10 +4,12 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  sentinel-js:
+    specifier: ^0.0.7
+    version: 0.0.7
+
 devDependencies:
-  "@types/jquery":
-    specifier: ^3.5.27
-    version: 3.5.27
   husky:
     specifier: ^8.0.3
     version: 8.0.3
@@ -430,22 +432,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@types/jquery@3.5.27:
-    resolution:
-      {
-        integrity: sha512-TR28Y8ezIGgfyA02UOh9x+Fy16/1qWYAnvtRd2gTBJuccX/vmddyti0MezLkTv7f+OLofVc2T961VPyKv1tXJQ==,
-      }
-    dependencies:
-      "@types/sizzle": 2.3.6
-    dev: true
-
-  /@types/sizzle@2.3.6:
-    resolution:
-      {
-        integrity: sha512-m04Om5Gz6kbjUwAQ7XJJQ30OdEFsSmAVsvn4NYwcTRyMVpKKa1aPuESw1n2CxS5fYkOQv3nHgDKeNa8e76fUkw==,
-      }
-    dev: true
 
   /acorn-walk@8.3.0:
     resolution:
@@ -1249,6 +1235,13 @@ packages:
     dependencies:
       execa: 5.1.1
     dev: true
+
+  /sentinel-js@0.0.7:
+    resolution:
+      {
+        integrity: sha512-jbGZvDqhmjd5IZh8a3qCypmc1Hlgdu+vastCCT6nK2Vopfsoq/3fstVMJxZJtxy2wlw9EVVGmFeGFObVp9E6MA==,
+      }
+    dev: false
 
   /shebang-command@2.0.0:
     resolution:
