@@ -23,24 +23,29 @@
     children == null ? void 0 : children.forEach((child) => el.append(child));
     return el;
   }
-  const aniwave = () => {
-    var _a;
-    var e = createElement(
-      "a",
-      {
-        href: "#",
-        target: "_blank",
-        class: "ctrl"
-      },
-      [createElement("i", { class: "fab fa-reddit" }), " Reddit"]
-    );
-    (_a = document.querySelector("#controls .left")) == null ? void 0 : _a.prepend(e);
-    e.addEventListener("mouseover", () => {
-      var _a2, _b;
-      const title = (((_a2 = document.querySelector("#w-info .title")) == null ? void 0 : _a2.textContent) ?? "").replace("(TV)", "").replace(/-/g, " ");
-      const epi = (((_b = document.querySelector("#w-servers .tip > div:first-child > b")) == null ? void 0 : _b.textContent) ?? "").replace("Episode ", "");
-      e.setAttribute("href", getLink(title, epi));
-    });
+  const aniwave = {
+    isSite() {
+      return window.location.hostname.includes("aniwave");
+    },
+    inject() {
+      var _a;
+      const e = createElement(
+        "a",
+        {
+          href: "#",
+          target: "_blank",
+          class: "ctrl"
+        },
+        [createElement("i", { class: "fab fa-reddit" }), " Reddit"]
+      );
+      (_a = document.querySelector("#controls .left")) == null ? void 0 : _a.prepend(e);
+      e.addEventListener("mouseover", () => {
+        var _a2, _b;
+        const title = (((_a2 = document.querySelector("#w-info .title")) == null ? void 0 : _a2.textContent) ?? "").replace("(TV)", "").replace(/-/g, " ");
+        const epi = (((_b = document.querySelector("#w-servers .tip > div:first-child > b")) == null ? void 0 : _b.textContent) ?? "").replace("Episode ", "");
+        e.setAttribute("href", getLink(title, epi));
+      });
+    }
   };
   var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
   function getDefaultExportFromCjs(x) {
@@ -147,32 +152,42 @@
   })(sentinel_umd);
   var sentinel_umdExports = sentinel_umd.exports;
   const sentinel = /* @__PURE__ */ getDefaultExportFromCjs(sentinel_umdExports);
-  const netflix = () => {
-    var title = "";
-    var epi = "";
-    sentinel.on(".watch-video--bottom-controls-container h4", function(el) {
-      var _a, _b;
-      title = el.innerText;
-      epi = (((_b = (_a = el.parentElement) == null ? void 0 : _a.querySelector("span")) == null ? void 0 : _b.innerText) ?? "").replace(
-        "E",
-        ""
+  const netflix = {
+    isSite() {
+      return window.location.hostname.includes("netflix");
+    },
+    inject() {
+      let title = "";
+      let epi = "";
+      sentinel.on(".watch-video--bottom-controls-container h4", function(el) {
+        var _a, _b;
+        title = el.innerText;
+        epi = (((_b = (_a = el.parentElement) == null ? void 0 : _a.querySelector("span")) == null ? void 0 : _b.innerText) ?? "").replace(
+          "E",
+          ""
+        );
+      });
+      sentinel.on(
+        ".SeamlessControls--container > div:last-of-type",
+        function(el) {
+          var _a;
+          const button = (_a = el == null ? void 0 : el.querySelector("button")) == null ? void 0 : _a.cloneNode(true);
+          button.children[0].innerHTML = "Reddit";
+          button.style.marginRight = "1.25rem";
+          button.onclick = function() {
+            window.open(getLink(title, epi), "_blank");
+          };
+          el == null ? void 0 : el.prepend(button);
+        }
       );
-    });
-    sentinel.on(".SeamlessControls--container > div:last-of-type", function(el) {
-      var _a;
-      var button = (_a = el == null ? void 0 : el.querySelector("button")) == null ? void 0 : _a.cloneNode(true);
-      button.children[0].innerHTML = "Reddit";
-      button.style.marginRight = "1.25rem";
-      button.onclick = function() {
-        window.open(getLink(title, epi), "_blank");
-      };
-      el == null ? void 0 : el.prepend(button);
-    });
+    }
   };
-  if (window.location.hostname.includes("aniwave")) {
-    aniwave();
-  } else if (window.location.hostname.includes("netflix")) {
-    netflix();
+  const providers = [aniwave, netflix];
+  for (let provider of providers) {
+    if (provider.isSite()) {
+      provider.inject();
+      break;
+    }
   }
 
 })();

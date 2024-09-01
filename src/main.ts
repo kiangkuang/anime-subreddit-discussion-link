@@ -1,8 +1,12 @@
-import aniwave from "./sites/aniwave";
-import netflix from "./sites/netflix";
+import { IProvider } from "./providers/IProvider";
+import { aniwave } from "./providers/aniwave";
+import { netflix } from "./providers/netflix";
 
-if (window.location.hostname.includes("aniwave")) {
-  aniwave();
-} else if (window.location.hostname.includes("netflix")) {
-  netflix();
+const providers: IProvider[] = [aniwave, netflix];
+
+for (let provider of providers) {
+  if (provider.isSite()) {
+    provider.inject();
+    break;
+  }
 }
