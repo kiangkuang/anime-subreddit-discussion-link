@@ -1,8 +1,8 @@
 import { IProvider } from "./providers/IProvider";
-import { aniwave } from "./providers/aniwave";
+import { hianime } from "./providers/hianime";
 import { netflix } from "./providers/netflix";
 
-const providers: IProvider[] = [aniwave, netflix];
+const providers: IProvider[] = [hianime, netflix];
 
 for (let provider of providers) {
   if (provider.isSite()) {

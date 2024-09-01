@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Anime Subreddit Discussion Link
 // @namespace    https://github.com/kiangkuang
-// @version      1.3.0
+// @version      1.4.0
 // @author       Kiang Kuang
 // @description  Adds a link to Anime Subreddit episode discussion threads on anime platforms.
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
-// @include      *://aniwave.tld/watch/*
+// @include      *://hianime.tld/watch/*
 // @include      https://www.netflix.com/*
 // ==/UserScript==
 
@@ -23,27 +23,24 @@
     children == null ? void 0 : children.forEach((child) => el.append(child));
     return el;
   }
-  const aniwave = {
+  const hianime = {
     isSite() {
-      return window.location.hostname.includes("aniwave");
+      return window.location.hostname.includes("hianime");
     },
     inject() {
       var _a;
-      const e = createElement(
+      const a = createElement(
         "a",
-        {
-          href: "#",
-          target: "_blank",
-          class: "ctrl"
-        },
-        [createElement("i", { class: "fab fa-reddit" }), " Reddit"]
+        { href: "#", target: "_blank", class: "btn btn-sm" },
+        [createElement("i", { class: "fab fa-reddit mr-1" }), "Reddit"]
       );
-      (_a = document.querySelector("#controls .left")) == null ? void 0 : _a.prepend(e);
-      e.addEventListener("mouseover", () => {
+      const div = createElement("div", { class: "pc-item" }, [a]);
+      (_a = document.querySelector(".player-controls")) == null ? void 0 : _a.prepend(div);
+      a.addEventListener("mouseover", () => {
         var _a2, _b;
-        const title = (((_a2 = document.querySelector("#w-info .title")) == null ? void 0 : _a2.textContent) ?? "").replace("(TV)", "").replace(/-/g, " ");
-        const epi = (((_b = document.querySelector("#w-servers .tip > div:first-child > b")) == null ? void 0 : _b.textContent) ?? "").replace("Episode ", "");
-        e.setAttribute("href", getLink(title, epi));
+        const title = (((_a2 = document.querySelector(".film-name > a")) == null ? void 0 : _a2.textContent) ?? "").replace("(TV)", "").replace(/-/g, " ");
+        const epi = (((_b = document.querySelector(".server-notice > strong > b")) == null ? void 0 : _b.textContent) ?? "").replace("Episode ", "");
+        a.setAttribute("href", getLink(title, epi));
       });
     }
   };
@@ -182,7 +179,7 @@
       );
     }
   };
-  const providers = [aniwave, netflix];
+  const providers = [hianime, netflix];
   for (let provider of providers) {
     if (provider.isSite()) {
       provider.inject();

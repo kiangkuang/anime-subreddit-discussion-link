@@ -4,7 +4,7 @@ Adds a link to Anime Subreddit episode discussion threads on streaming platforms
 
 Currently supported sites:
 
-- [AniWave](https://aniwave.to)
+- [HiAnime](https://hianime.to)
 - [Netflix](https://netflix.com)
 
 ## Install
