@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Anime Subreddit Discussion Link
 // @namespace    https://github.com/kiangkuang
-// @version      1.4.0
+// @version      1.5.0
 // @author       Kiang Kuang
 // @description  Adds a link to Anime Subreddit episode discussion threads on anime platforms.
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @include      *://hianime.tld/watch/*
+// @include      *://hianimez.tld/watch/*
 // @include      https://www.netflix.com/*
 // ==/UserScript==
 
@@ -63,18 +64,15 @@
          * @param {Function} callback - The callback function
          */
         on: function(cssSelectors, callback) {
-          if (!callback)
-            return;
+          if (!callback) return;
           if (!styleEl) {
             var doc = document, head = doc.head;
             doc.addEventListener("animationstart", function(ev, callbacks, l, i) {
               callbacks = animationCallbacks[ev.animationName];
-              if (!callbacks)
-                return;
+              if (!callbacks) return;
               ev.stopImmediatePropagation();
               l = callbacks.length;
-              for (i = 0; i < l; i++)
-                callbacks[i](ev.target);
+              for (i = 0; i < l; i++) callbacks[i](ev.target);
             }, true);
             styleEl = doc.getElementById("sentinel-css");
             if (!styleEl) {
@@ -111,24 +109,20 @@
          */
         off: function(cssSelectors, callback) {
           (isArray(cssSelectors) ? cssSelectors : [cssSelectors]).map(function(selector, animId, callbackList, i) {
-            if (!(animId = selectorToAnimationMap[selector]))
-              return;
+            if (!(animId = selectorToAnimationMap[selector])) return;
             callbackList = animationCallbacks[animId];
             if (callback) {
               i = callbackList.length;
               while (i--) {
-                if (callbackList[i] === callback)
-                  callbackList.splice(i, 1);
+                if (callbackList[i] === callback) callbackList.splice(i, 1);
               }
             } else {
               callbackList = [];
             }
-            if (callbackList.length)
-              return;
+            if (callbackList.length) return;
             i = cssRules.length;
             while (i--) {
-              if (cssRules[i]._id == selector)
-                styleSheet.deleteRule(i);
+              if (cssRules[i]._id == selector) styleSheet.deleteRule(i);
             }
             delete selectorToAnimationMap[selector];
             delete animationCallbacks[animId];
@@ -140,8 +134,7 @@
         reset: function() {
           selectorToAnimationMap = {};
           animationCallbacks = {};
-          if (styleEl)
-            styleEl.parentNode.removeChild(styleEl);
+          if (styleEl) styleEl.parentNode.removeChild(styleEl);
           styleEl = 0;
         }
       };
